@@ -1,9 +1,11 @@
 {
     "name": "usamamuneerchaudhary/laraclient",
-    "description": "Package that simplifies the process of working with APIs in Laravel.",
+    "description": "Package that simplifies the process of working with multiple APIs in Laravel.",
     "keywords": [
         "usamamuneerchaudhary",
         "laravel-client",
+        "api",
+        "guzzlehttp",
         "http",
         "httpclient"
     ],
