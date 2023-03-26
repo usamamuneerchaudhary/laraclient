@@ -11,12 +11,14 @@ class LogsController extends Controller
      * @throws \Psr\Container\ContainerExceptionInterface
      * @throws \Psr\Container\NotFoundExceptionInterface
      */
-    public function index()
+    public function index(
+    ): \Illuminate\Foundation\Application|\Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\Foundation\Application|null
     {
         if (request()->get('endpoint')) {
-            $logs = LaraClientLog::where('endpoint', request()->get('endpoint'))->orderBy('created_at', 'desc')->get();
+            $logs = LaraClientLog::where('endpoint', request()->get('endpoint'))->orderBy('created_at',
+                'desc')->paginate(10);
         } else {
-            $logs = LaraClientLog::orderBy('created_at', 'desc')->get();
+            $logs = LaraClientLog::orderBy('created_at', 'desc')->paginate(10);
         }
         return view('laraclient::logs.index', compact('logs'));
     }

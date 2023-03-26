@@ -37,7 +37,7 @@ class LaraClient implements LaraClientInterface
      * @throws GuzzleException
      * @throws LaraClientApiClientException
      */
-    public function get($uri, $queryParams = [])
+    public function get($uri, $queryParams = []): Response
     {
         $fullUrl = $this->getFullUrl($uri);
         return $this->request('GET', $fullUrl, ['query' => $queryParams]);
@@ -50,7 +50,7 @@ class LaraClient implements LaraClientInterface
      * @throws GuzzleException
      * @throws LaraClientApiClientException
      */
-    public function post($uri, $data = [])
+    public function post($uri, $data = []): Response
     {
         $fullUrl = $this->getFullUrl($uri);
         return $this->request('POST', $fullUrl, ['json' => $data]);
@@ -63,7 +63,7 @@ class LaraClient implements LaraClientInterface
      * @throws GuzzleException
      * @throws LaraClientApiClientException
      */
-    public function put($uri, $data = [])
+    public function put($uri, $data = []): Response
     {
         $fullUrl = $this->getFullUrl($uri);
         return $this->request('PUT', $fullUrl, ['json' => $data]);
@@ -76,7 +76,7 @@ class LaraClient implements LaraClientInterface
      * @throws GuzzleException
      * @throws LaraClientApiClientException
      */
-    public function patch($uri, $data = [])
+    public function patch($uri, $data = []): Response
     {
         $fullUrl = $this->getFullUrl($uri);
         return $this->request('PATCH', $fullUrl, ['json' => $data]);
@@ -89,7 +89,7 @@ class LaraClient implements LaraClientInterface
      * @throws GuzzleException
      * @throws LaraClientApiClientException
      */
-    public function delete($uri, $data = [])
+    public function delete($uri, $data = []): Response
     {
         $fullUrl = $this->getFullUrl($uri);
         return $this->request('DELETE', $fullUrl, ['json' => $data]);
@@ -99,7 +99,7 @@ class LaraClient implements LaraClientInterface
      * @throws LaraClientApiClientException
      * @throws GuzzleException
      */
-    protected function request($method, $uri, $options)
+    protected function request($method, $uri, $options): Response
     {
         $options['headers'] = $this->getHeaders();
 
@@ -127,7 +127,7 @@ class LaraClient implements LaraClientInterface
      * @param $additionalHeaders
      * @return array
      */
-    protected function getHeaders($additionalHeaders = [])
+    protected function getHeaders($additionalHeaders = []): array
     {
         // Merge the default headers with any additional headers passed in
         $headers = array_merge($this->config['default_headers'], $additionalHeaders);
@@ -144,7 +144,7 @@ class LaraClient implements LaraClientInterface
      * @param $resetHeader
      * @return void
      */
-    protected function handleRateLimit($resetHeader)
+    protected function handleRateLimit($resetHeader): void
     {
         if (!empty($resetHeader)) {
             $resetTimestamp = (int) $resetHeader[0];
@@ -165,7 +165,7 @@ class LaraClient implements LaraClientInterface
      * @param $response
      * @return void
      */
-    protected function logRequest(string $method, string $uri, array $options, $response)
+    protected function logRequest(string $method, string $uri, array $options, $response): void
     {
         $status = $response instanceof ResponseInterface ? $response->getStatusCode() : null;
         $responseBody = $response instanceof ResponseInterface ? (string) $response->getBody() : null;
@@ -184,7 +184,7 @@ class LaraClient implements LaraClientInterface
      * @param $uri
      * @return string
      */
-    protected function getFullUrl($uri)
+    protected function getFullUrl($uri): string
     {
         $fullUrl = $uri;
         if (!preg_match('/^https?:\/\//', $uri)) {

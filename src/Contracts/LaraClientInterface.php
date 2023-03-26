@@ -9,33 +9,33 @@ interface LaraClientInterface
      * @param $queryParams
      * @return mixed
      */
-    public function get($uri, $queryParams = []);
+    public function get($uri, $queryParams = []): mixed;
 
     /**
      * @param $uri
      * @param $data
      * @return mixed
      */
-    public function post($uri, $data = []);
+    public function post($uri, $data = []): mixed;
 
     /**
      * @param $uri
      * @param $data
      * @return mixed
      */
-    public function put($uri, $data = []);
+    public function put($uri, $data = []): mixed;
 
     /**
      * @param $uri
      * @param $data
      * @return mixed
      */
-    public function patch($uri, $data = []);
+    public function patch($uri, $data = []): mixed;
 
     /**
      * @param $uri
      * @param $data
      * @return mixed
      */
-    public function delete($uri, $data = []);
+    public function delete($uri, $data = []): mixed;
 }

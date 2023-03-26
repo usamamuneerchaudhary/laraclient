@@ -11,7 +11,7 @@ class LaraClientServiceProvider extends ServiceProvider
     /**
      * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->mergeConfigFrom(__DIR__.'/../config/lara_client.php', 'lara_client');
     }
@@ -19,7 +19,7 @@ class LaraClientServiceProvider extends ServiceProvider
     /**
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         if ($this->app->runningInConsole()) {
             // Publish config file
@@ -39,7 +39,7 @@ class LaraClientServiceProvider extends ServiceProvider
     /**
      * @return void
      */
-    protected function registerRoutes()
+    protected function registerRoutes(): void
     {
         Route::group($this->routeConfiguration(), function () {
             $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
@@ -49,7 +49,7 @@ class LaraClientServiceProvider extends ServiceProvider
     /**
      * @return string[]
      */
-    protected function routeConfiguration()
+    protected function routeConfiguration(): array
     {
         return [
             'prefix' => 'laraclient',

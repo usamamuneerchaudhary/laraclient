@@ -25,7 +25,7 @@ class LaraClientApiClientException extends Exception
     /**
      * @return mixed|null
      */
-    public function getStatusCode()
+    public function getStatusCode(): mixed
     {
         return $this->statusCode;
     }
@@ -33,7 +33,7 @@ class LaraClientApiClientException extends Exception
     /**
      * @return mixed|null
      */
-    public function getResponse()
+    public function getResponse(): mixed
     {
         return $this->response;
     }
@@ -41,7 +41,7 @@ class LaraClientApiClientException extends Exception
     /**
      * @return void
      */
-    public function report()
+    public function report(): void
     {
         Log::debug('HTTP Error with Lara Client API');
     }
@@ -50,7 +50,7 @@ class LaraClientApiClientException extends Exception
      * @param $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function render($request)
+    public function render($request): \Illuminate\Http\JsonResponse
     {
         return response()->json(["error" => true, "message" => $this->getStatusCode()]);
     }

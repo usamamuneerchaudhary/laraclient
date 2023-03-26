@@ -20,7 +20,7 @@ class Response
     /**
      * @return mixed
      */
-    public function getStatusCode()
+    public function getStatusCode(): mixed
     {
         return $this->statusCode;
     }
@@ -28,7 +28,7 @@ class Response
     /**
      * @return mixed
      */
-    public function getData()
+    public function getData(): mixed
     {
         return json_decode($this->data);
     }
