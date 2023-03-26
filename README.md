@@ -68,7 +68,7 @@ http://yourwebsite.com/laraclient/logs
 http://yourwebsite.com/laraclient/logs?endpoint=https://weatherapi-com.p.rapidapi.com/current.json
 ```
 ## Tutorial
-[How to handle multiple #API connections in #Laravel](https://thewebtier.com/how-to-handle-multiple-api-connections-in-laravel)
+[How to handle multiple API connections in Laravel](https://thewebtier.com/how-to-handle-multiple-api-connections-in-laravel)
 
 ## Tests
 `composer test`
