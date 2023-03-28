@@ -1,4 +1,12 @@
 [![image](https://www.linkpicture.com/q/laraclient.jpg)](https://thewebtier.com)
+
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/usamamuneerchaudhary/laraclient?style=flat-square)](https://packagist.org/packages/usamamuneerchaudhary/laraclient)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/usamamuneerchaudhary/laraclient/badges/quality-score.png?b=main)](https://scrutinizer-ci.com/g/usamamuneerchaudhary/laraclient/?branch=main)
+[![CodeFactor](https://www.codefactor.io/repository/github/usamamuneerchaudhary/laraclient/badge)](https://www.codefactor.io/repository/github/usamamuneerchaudhary/laraclient)
+[![Build Status](https://scrutinizer-ci.com/g/usamamuneerchaudhary/laraclient/badges/build.png?b=main)](https://scrutinizer-ci.com/g/usamamuneerchaudhary/laraclient/build-status/main)
+[![Code Intelligence Status](https://scrutinizer-ci.com/g/usamamuneerchaudhary/laraclient/badges/code-intelligence.svg?b=main)](https://scrutinizer-ci.com/code-intelligence)
+[![Total Downloads](https://img.shields.io/packagist/dt/usamamuneerchaudhary/laraclient?style=flat-square)](https://packagist.org/packages/usamamuneerchaudhary/laraclient)
+[![Licence](https://img.shields.io/packagist/l/usamamuneerchaudhary/laraclient?style=flat-square)](https://github.com/usamamuneerchaudhary/laraclient/blob/HEAD/LICENSE.md)
 ## Introduction
 Lara Client simplifies the process of working with APIs in Laravel, making it easy to handle authentication, rate 
 limiting, and error handling. 
