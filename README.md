@@ -13,7 +13,7 @@ Here's a quick example of what you can do in your models to enable tagging:
 - *This package supports Laravel 10*
 - *Minimum PHP v8.1 supported*
 
-```
+```php
 namespace App\Http\Controllers;
 
 use Usamamuneerchaudhary\LaraClient\LaraClient;
