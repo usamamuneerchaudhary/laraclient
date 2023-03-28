@@ -86,7 +86,9 @@ If you discover any security related issues, please email hello@usamamuneer.me i
 
 ## Credits
 
-- [Usama Muneer](https://github.com/usamamuneerchaudhary)
+- [Laravel](https://laravel.com)
+- [Usama Muneer](https://usamamuneer.me)
+- [All Contributors](https://github.com/usamamuneerchaudhary/laraclient/graphs/contributors)
 
 ## License
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
