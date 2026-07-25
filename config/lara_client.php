@@ -120,6 +120,11 @@ return [
             'header' => 'Idempotency-Key',
             'methods' => ['POST', 'PATCH'],
         ],
+
+        // Used by `php artisan laraclient:check`. Most APIs have nothing useful
+        // at their base URI, so set a lightweight endpoint per connection.
+        'health_path' => null,
+        'health_query' => [],
     ],
 
     /*
@@ -157,6 +162,8 @@ return [
                 'enabled' => true,
                 'ttl' => 600,
             ],
+            'health_path' => 'current.json',
+            'health_query' => ['q' => 'London'],
         ],
 
         // OAuth2 client credentials. Tokens are fetched, cached and refreshed
