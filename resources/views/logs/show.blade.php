@@ -41,33 +41,81 @@
     </p>
 
     @if ($log->exception)
-        <section class="payload">
-            <h2>Exception</h2>
-            <pre>{{ $log->exception }}</pre>
-        </section>
+        @include('laraclient::partials.payload-section', [
+            'title' => 'Exception',
+            'id' => 'exception',
+            'content' => $log->exception,
+        ])
     @endif
 
-    <section class="payload">
-        <h2>Request headers</h2>
-        <pre>{{ json_encode($log->request_headers ?? [], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) }}</pre>
-    </section>
+    @include('laraclient::partials.payload-section', [
+        'title' => 'Request headers',
+        'id' => 'request-headers',
+        'content' => json_encode($log->request_headers ?? [], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES),
+    ])
 
     @if ($log->request_body)
-        <section class="payload">
-            <h2>Request body</h2>
-            <pre>{{ $log->request_body }}</pre>
-        </section>
+        @include('laraclient::partials.payload-section', [
+            'title' => 'Request body',
+            'id' => 'request-body',
+            'content' => $log->request_body,
+        ])
     @endif
 
-    <section class="payload">
-        <h2>Response headers</h2>
-        <pre>{{ json_encode($log->response_headers ?? [], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) }}</pre>
-    </section>
+    @include('laraclient::partials.payload-section', [
+        'title' => 'Response headers',
+        'id' => 'response-headers',
+        'content' => json_encode($log->response_headers ?? [], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES),
+    ])
 
     @if ($log->response_body)
-        <section class="payload">
-            <h2>Response body</h2>
-            <pre>{{ $log->response_body }}</pre>
-        </section>
+        @include('laraclient::partials.payload-section', [
+            'title' => 'Response body',
+            'id' => 'response-body',
+            'content' => $log->response_body,
+        ])
     @endif
 @endsection
+
+@push('scripts')
+    <script>
+        document.querySelectorAll('[data-copy-target]').forEach((button) => {
+            button.addEventListener('click', async () => {
+                const target = document.getElementById(button.dataset.copyTarget);
+
+                if (! target) {
+                    return;
+                }
+
+                const label = button.querySelector('.copy-btn-label');
+
+                try {
+                    await navigator.clipboard.writeText(target.textContent);
+                } catch {
+                    const selection = window.getSelection();
+                    const range = document.createRange();
+
+                    range.selectNodeContents(target);
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+
+                    if (! document.execCommand('copy')) {
+                        selection.removeAllRanges();
+
+                        return;
+                    }
+
+                    selection.removeAllRanges();
+                }
+
+                button.classList.add('is-copied');
+                label.textContent = 'Copied';
+
+                window.setTimeout(() => {
+                    button.classList.remove('is-copied');
+                    label.textContent = 'Copy';
+                }, 2000);
+            });
+        });
+    </script>
+@endpush

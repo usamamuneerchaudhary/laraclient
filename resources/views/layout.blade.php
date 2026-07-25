@@ -300,6 +300,14 @@
 
         .payload { margin-bottom: 24px; }
 
+        .payload-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
         .payload h2 {
             font-family: var(--mono);
             font-size: 11px;
@@ -307,7 +315,31 @@
             text-transform: uppercase;
             color: var(--muted);
             font-weight: 500;
-            margin: 0 0 8px;
+            margin: 0;
+        }
+
+        .copy-btn {
+            flex-shrink: 0;
+            font-family: var(--mono);
+            font-size: 11px;
+            letter-spacing: 0.04em;
+            padding: 4px 10px;
+            border: 1px solid var(--rule);
+            border-radius: 3px;
+            background: var(--panel);
+            color: var(--muted);
+            cursor: pointer;
+            transition: border-color 120ms ease, color 120ms ease, background 120ms ease;
+        }
+
+        .copy-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .copy-btn.is-copied {
+            border-color: var(--ok);
+            color: var(--ok);
         }
 
         .payload pre {
@@ -347,5 +379,7 @@
     <div class="shell">
         @yield('content')
     </div>
+
+    @stack('scripts')
 </body>
 </html>
