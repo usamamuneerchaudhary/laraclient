@@ -208,15 +208,17 @@ return [
     | Log Dashboard
     |--------------------------------------------------------------------------
     |
-    | The dashboard exposes request and response bodies, so it is gated. The
-    | 'viewLaraClient' gate is checked in addition to this middleware stack.
+    | The dashboard exposes request and response bodies, so access is always
+    | checked via the 'viewLaraClient' gate in the controller. Middleware here
+    | is optional — add 'auth' (or your panel middleware) when you want Laravel
+    | to require a logged-in user before the gate runs.
     |
     */
 
     'dashboard' => [
         'enabled' => env('LARACLIENT_DASHBOARD', true),
         'path' => 'laraclient',
-        'middleware' => ['web', 'auth'],
+        'middleware' => ['web'],
         'per_page' => 50,
     ],
 

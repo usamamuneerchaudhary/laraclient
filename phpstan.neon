@@ -3,6 +3,5 @@ parameters:
     paths:
         - src
     treatPhpDocTypesAsCertain: false
-    ignoreErrors:
-        # Tagged cache is guarded at runtime with method_exists().
-        - '#Call to an undefined method Illuminate\\Contracts\\Cache\\Repository::tags\(\)#'
+    scanFiles:
+        - stubs/pulse.stub

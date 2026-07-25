@@ -10,8 +10,9 @@ beyond installing this release.**
 - Credentials are redacted before anything is written to the logs table, a fixture or the dashboard.
   1.x wrote `json_encode($options)` directly, storing every `Authorization` header in plaintext.
   Redaction covers headers, nested body keys (including inside lists) and query-string secrets.
-- The log dashboard is now behind configurable middleware plus a `viewLaraClient` gate that denies
-  everyone outside `local` by default. 1.x shipped the route with its middleware commented out.
+- The log dashboard is now behind a `viewLaraClient` gate that denies everyone outside `local`
+  by default. Auth middleware is optional via `dashboard.middleware`. 1.x shipped the route with
+  its middleware commented out.
 - The upgrade migration **drops** the 1.x `request_payload` column rather than migrating it.
 
 ### Fixed
