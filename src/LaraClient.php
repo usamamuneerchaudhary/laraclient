@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Usamamuneerchaudhary\LaraClient;
 
 use GuzzleHttp\Client;
@@ -14,13 +16,12 @@ use Usamamuneerchaudhary\LaraClient\Models\LaraClientLog;
 
 class LaraClient implements LaraClientInterface
 {
-    protected $httpClient;
-    protected $config;
+    protected Client $httpClient;
 
-    /**
-     * @param $connection
-     */
-    public function __construct($connection = null)
+    /** @var array<string, mixed> */
+    protected array $config;
+
+    public function __construct(?string $connection = null)
     {
         $this->config = Config::get('lara_client.connections.'.($connection ?: Config::get('lara_client.default')));
         $this->httpClient = new Client([
@@ -31,75 +32,77 @@ class LaraClient implements LaraClientInterface
     }
 
     /**
-     * @param $uri
-     * @param $queryParams
-     * @return Response
+     * @param  array<string, mixed>  $queryParams
+     *
      * @throws GuzzleException
      * @throws LaraClientApiClientException
      */
-    public function get($uri, $queryParams = []): Response
+    public function get(string $uri, array $queryParams = []): Response
     {
         $fullUrl = $this->getFullUrl($uri);
+
         return $this->request('GET', $fullUrl, ['query' => $queryParams]);
     }
 
     /**
-     * @param $uri
-     * @param $data
-     * @return Response
+     * @param  array<string, mixed>  $data
+     *
      * @throws GuzzleException
      * @throws LaraClientApiClientException
      */
-    public function post($uri, $data = []): Response
+    public function post(string $uri, array $data = []): Response
     {
         $fullUrl = $this->getFullUrl($uri);
+
         return $this->request('POST', $fullUrl, ['json' => $data]);
     }
 
     /**
-     * @param $uri
-     * @param $data
-     * @return Response
+     * @param  array<string, mixed>  $data
+     *
      * @throws GuzzleException
      * @throws LaraClientApiClientException
      */
-    public function put($uri, $data = []): Response
+    public function put(string $uri, array $data = []): Response
     {
         $fullUrl = $this->getFullUrl($uri);
+
         return $this->request('PUT', $fullUrl, ['json' => $data]);
     }
 
     /**
-     * @param $uri
-     * @param $data
-     * @return Response
+     * @param  array<string, mixed>  $data
+     *
      * @throws GuzzleException
      * @throws LaraClientApiClientException
      */
-    public function patch($uri, $data = []): Response
+    public function patch(string $uri, array $data = []): Response
     {
         $fullUrl = $this->getFullUrl($uri);
+
         return $this->request('PATCH', $fullUrl, ['json' => $data]);
     }
 
     /**
-     * @param $uri
-     * @param $data
-     * @return Response
+     * @param  array<string, mixed>  $data
+     *
      * @throws GuzzleException
      * @throws LaraClientApiClientException
      */
-    public function delete($uri, $data = []): Response
+    public function delete(string $uri, array $data = []): Response
     {
         $fullUrl = $this->getFullUrl($uri);
+
         return $this->request('DELETE', $fullUrl, ['json' => $data]);
     }
 
     /**
+     * @param  array<string, mixed>  $options
+     *
      * @throws LaraClientApiClientException
      * @throws GuzzleException
      */
-    protected function request($method, $uri, $options): Response
+    protected function request(string $method, string $uri, array $options): Response
     {
         $options['headers'] = $this->getHeaders();
 
@@ -116,24 +119,30 @@ class LaraClient implements LaraClientInterface
 
             if ($response->getStatusCode() === 429) {
                 $this->handleRateLimit($response->getHeader('X-RateLimit-Reset'));
+
                 return $this->request($method, $uri, $options);
             }
-            throw new LaraClientApiClientException($response->getStatusCode(), $response->getReasonPhrase());
+            throw new LaraClientApiClientException(
+                (string) $response->getReasonPhrase(),
+                $response->getStatusCode(),
+                $response,
+            );
         }
-        return new Response($response->getStatusCode(), $response->getBody());
+
+        return new Response($response, $method, $uri);
     }
 
     /**
-     * @param $additionalHeaders
-     * @return array
+     * @param  array<string, mixed>  $additionalHeaders
+     * @return array<string, mixed>
      */
-    protected function getHeaders($additionalHeaders = []): array
+    protected function getHeaders(array $additionalHeaders = []): array
     {
         // Merge the default headers with any additional headers passed in
         $headers = array_merge($this->config['default_headers'], $additionalHeaders);
 
         // Add the Authorization header if an API key is set
-        if (!empty($this->config['api_key'])) {
+        if (! empty($this->config['api_key'])) {
             $headers['Authorization'] = 'Bearer '.$this->config['api_key'];
         }
 
@@ -141,12 +150,11 @@ class LaraClient implements LaraClientInterface
     }
 
     /**
-     * @param $resetHeader
-     * @return void
+     * @param  list<string>  $resetHeader
      */
-    protected function handleRateLimit($resetHeader): void
+    protected function handleRateLimit(array $resetHeader): void
     {
-        if (!empty($resetHeader)) {
+        if (! empty($resetHeader)) {
             $resetTimestamp = (int) $resetHeader[0];
             $currentTimestamp = time();
 
@@ -157,18 +165,13 @@ class LaraClient implements LaraClientInterface
         }
     }
 
-
     /**
-     * @param  string  $method
-     * @param  string  $uri
-     * @param  array  $options
-     * @param $response
-     * @return void
+     * @param  array<string, mixed>  $options
      */
-    protected function logRequest(string $method, string $uri, array $options, $response): void
+    protected function logRequest(string $method, string $uri, array $options, ResponseInterface $response): void
     {
-        $status = $response instanceof ResponseInterface ? $response->getStatusCode() : null;
-        $responseBody = $response instanceof ResponseInterface ? (string) $response->getBody() : null;
+        $status = $response->getStatusCode();
+        $responseBody = (string) $response->getBody();
 
         LaraClientLog::create([
             'endpoint' => $uri,
@@ -176,20 +179,17 @@ class LaraClient implements LaraClientInterface
             'request_payload' => json_encode($options),
             'response_status' => $status,
             'response_body' => $responseBody,
-            'created_at' => now()
+            'created_at' => now(),
         ]);
     }
 
-    /**
-     * @param $uri
-     * @return string
-     */
-    protected function getFullUrl($uri): string
+    protected function getFullUrl(string $uri): string
     {
         $fullUrl = $uri;
-        if (!preg_match('/^https?:\/\//', $uri)) {
+        if (! preg_match('/^https?:\/\//', $uri)) {
             $fullUrl = $this->config['base_uri'].$uri;
         }
+
         return $fullUrl;
     }
 }
