@@ -1,0 +1,29 @@
+<?php
+
+namespace Laravel\Pulse\Facades;
+
+class PulseValue
+{
+    public function avg(): self
+    {
+        return $this;
+    }
+
+    public function max(): self
+    {
+        return $this;
+    }
+
+    public function count(): self
+    {
+        return $this;
+    }
+}
+
+class Pulse
+{
+    public static function record(string $type, string $key, mixed $value = null): PulseValue
+    {
+        return new PulseValue;
+    }
+}
