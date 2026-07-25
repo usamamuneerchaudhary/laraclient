@@ -17,8 +17,7 @@ use Usamamuneerchaudhary\LaraClient\Testing\Fake;
  * @method static \Usamamuneerchaudhary\LaraClient\Response patch(string $uri, array<string, mixed> $data = [])
  * @method static \Usamamuneerchaudhary\LaraClient\Response delete(string $uri, array<string, mixed> $data = [])
  * @method static \Usamamuneerchaudhary\LaraClient\Response head(string $uri, array<string, mixed> $query = [])
- * @method static \Usamamuneerchaudhary\LaraClient\Testing\Fake ->fake(array<string, mixed>|\Closure|null $responses = null)
- * @method static \Usamamuneerchaudhary\LaraClient\Testing\FakeResponse response(array<string, mixed>|string $body = [], int $status = 200, array<string, string|list<string> $headers = [])
+ * @method static \Usamamuneerchaudhary\LaraClient\Testing\FakeResponse response(array<string, mixed>|string $body = [], int $status = 200, array<string, string|list<string>> $headers = [])
  * @method static \Usamamuneerchaudhary\LaraClient\Testing\FakeConnectionFailure failedConnection(string $message = 'Connection refused')
  * @method static \Usamamuneerchaudhary\LaraClient\LaraClientManager beforeSending(\Closure $callback)
  * @method static \Usamamuneerchaudhary\LaraClient\LaraClientManager afterResponse(\Closure $callback)
@@ -42,8 +41,7 @@ class LaraClient extends Facade
     /**
      * Facade::fake() is the idiom Laravel developers reach for first, so it is
      * wired to swap the real manager rather than relying on __callStatic.
-     */
-    /**
+     *
      * @param  array<string, mixed>|\Closure|null  $responses
      */
     public static function fake(array|\Closure|null $responses = null): Fake
