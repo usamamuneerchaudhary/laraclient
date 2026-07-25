@@ -1,5 +1,8 @@
 <?php
 
+declare(strict_types=1);
+
+use Usamamuneerchaudhary\LaraClient\Exceptions\LaraClientApiClientException;
 use Usamamuneerchaudhary\LaraClient\LaraClient;
 
 class LaraClientGetTest extends TestCase
@@ -22,7 +25,7 @@ class LaraClientGetTest extends TestCase
     public function it_throws_exception_for_failed_requests()
     {
         $client = new LaraClient('weatherapi');
-        $this->expectException(\Usamamuneerchaudhary\LaraClient\Exceptions\LaraClientApiClientException::class);
+        $this->expectException(LaraClientApiClientException::class);
         $client->get('/wrong.json', ['q' => 'london']);
     }
 

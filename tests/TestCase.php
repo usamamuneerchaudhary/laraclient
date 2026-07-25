@@ -1,64 +1,43 @@
 <?php
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Config;
+declare(strict_types=1);
 
-abstract class TestCase extends \Orchestra\Testbench\TestCase
+namespace Usamamuneerchaudhary\LaraClient\Tests;
+
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Orchestra\Testbench\TestCase as BaseTestCase;
+use Usamamuneerchaudhary\LaraClient\Facades\LaraClient;
+use Usamamuneerchaudhary\LaraClient\LaraClientServiceProvider;
+
+abstract class TestCase extends BaseTestCase
 {
-    /**
-     * @param $app
-     * @return string[]
-     */
-    protected function getPackageProviders($app)
+    use RefreshDatabase;
+
+    protected function getPackageProviders($app): array
     {
-        return [\Usamamuneerchaudhary\LaraClient\LaraClientServiceProvider::class];
+        return [LaraClientServiceProvider::class];
     }
 
-    /**
-     * @return void
-     */
-    public function setUp(): void
+    protected function getPackageAliases($app): array
     {
-        parent::setUp();
-        Model::unguard();
-        $this->artisan('migrate', [
-            '--database' => 'testbench',
-            '--realpath' => realpath(__DIR__.'/../migrations')
-        ]);
+        return ['LaraClient' => LaraClient::class];
     }
 
-
-    /**
-     * @param $app
-     * @return void
-     */
-    protected function getEnvironmentSetUp($app)
+    protected function defineEnvironment($app): void
     {
-        $app['config']->set('database.default', 'testbench');
-        $app['config']->set('database.connections.testbench', [
+        $app['config']->set('database.default', 'testing');
+        $app['config']->set('database.connections.testing', [
             'driver' => 'sqlite',
             'database' => ':memory:',
-            'prefix' => ''
+            'prefix' => '',
         ]);
-        $app['config']->set('lara_client.default', 'geodb');
-        $app['config']->set('lara_client.connections.geodb.base_uri',
-            'https://wft-geo-db.p.rapidapi.com/v1/geo/');
-        $app['config']->set('lara_client.connections.geodb.default_headers', [
-            'Accept' => 'application/json',
-            'Content-Type' => 'application/json',
-            'X-RapidAPI-Key' => '23c6b0817bmsh5720c5bcb04bb86p151c03jsn8f683b20fbe2',
-            'X-RapidAPI-Host' => 'wft-geo-db.p.rapidapi.com'
-        ]);
-        $app['config']->set('lara_client.connections.geodb.timeout', 30);
 
-        $app['config']->set('lara_client.connections.weatherapi.base_uri',
-            'https://weatherapi-com.p.rapidapi.com/');
-        $app['config']->set('lara_client.connections.weatherapi.default_headers', [
-            'Accept' => 'application/json',
-            'Content-Type' => 'application/json',
-            'X-RapidAPI-Key' => '23c6b0817bmsh5720c5bcb04bb86p151c03jsn8f683b20fbe2'
+        $app['config']->set('cache.default', 'array');
+
+        $app['config']->set('lara_client.default', 'test');
+        $app['config']->set('lara_client.connections.test', [
+            'base_uri' => 'https://api.test.local/v1/',
+            'auth' => ['driver' => 'bearer', 'token' => 'secret-token'],
         ]);
-        $app['config']->set('lara_client.connections.weatherapi.timeout', 30);
     }
-
 }
