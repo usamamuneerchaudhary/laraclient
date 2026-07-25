@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
          bootstrap="vendor/autoload.php"
-         backupGlobals="false"
-         backupStaticProperties="false"
-         processIsolation="false"
-         stopOnFailure="false"
-         colors="true">
+         colors="true"
+         cacheDirectory=".phpunit.cache"
+         failOnWarning="true"
+         failOnRisky="true">
     <testsuites>
-        <testsuite name="LaraClient test suite">
-            <directory suffix="Test.php">./tests</directory>
+        <testsuite name="Unit">
+            <directory>tests/Unit</directory>
+        </testsuite>
+        <testsuite name="Feature">
+            <directory>tests/Feature</directory>
         </testsuite>
     </testsuites>
-    <coverage>
+    <source>
         <include>
-            <directory suffix=".php">./src</directory>
+            <directory>src</directory>
         </include>
-    </coverage>
+    </source>
+    <php>
+        <env name="APP_ENV" value="testing"/>
+        <env name="CACHE_STORE" value="array"/>
+        <env name="LARACLIENT_RECORDER" value="off"/>
+    </php>
 </phpunit>
-
