@@ -479,7 +479,7 @@ class PendingRequest
     }
 
     /**
-    *  Everything transport-level is normalised here.
+     *  Everything transport-level is normalised here.
      */
     protected function normalise(mixed $reason, string $url): Throwable
     {
