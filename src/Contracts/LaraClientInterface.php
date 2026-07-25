@@ -1,41 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Usamamuneerchaudhary\LaraClient\Contracts;
 
 interface LaraClientInterface
 {
     /**
-     * @param $uri
-     * @param $queryParams
-     * @return mixed
+     * @param  array<string, mixed>  $queryParams
      */
-    public function get($uri, $queryParams = []): mixed;
+    public function get(string $uri, array $queryParams = []): mixed;
 
     /**
-     * @param $uri
-     * @param $data
-     * @return mixed
+     * @param  array<string, mixed>  $data
      */
-    public function post($uri, $data = []): mixed;
+    public function post(string $uri, array $data = []): mixed;
 
     /**
-     * @param $uri
-     * @param $data
-     * @return mixed
+     * @param  array<string, mixed>  $data
      */
-    public function put($uri, $data = []): mixed;
+    public function put(string $uri, array $data = []): mixed;
 
     /**
-     * @param $uri
-     * @param $data
-     * @return mixed
+     * @param  array<string, mixed>  $data
      */
-    public function patch($uri, $data = []): mixed;
+    public function patch(string $uri, array $data = []): mixed;
 
     /**
-     * @param $uri
-     * @param $data
-     * @return mixed
+     * @param  array<string, mixed>  $data
      */
-    public function delete($uri, $data = []): mixed;
+    public function delete(string $uri, array $data = []): mixed;
 }
