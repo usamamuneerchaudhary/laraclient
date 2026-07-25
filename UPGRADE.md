@@ -105,7 +105,8 @@ The log viewer is no longer public. Define who may see it:
 Gate::define('viewLaraClient', fn ($user) => $user->isAdmin());
 ```
 
-Undefined, the gate allows `local` only. Set `dashboard.middleware` to match your auth stack, or
+Undefined, the gate allows `local` only. Add `'auth'` (or your panel middleware) to
+`dashboard.middleware` when you want login required before the gate runs, or set
 `dashboard.enabled => false` to remove the routes entirely.
 
 ## 6. Update your call sites
